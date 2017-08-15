@@ -3,9 +3,6 @@ var router = express.Router();
 var mongo = require('mongodb');
 var db = require('monk')('localhost/newgallery');
 
-/* GET home page. */
-
-
 router.get('/',function(req, res, next) {
 		var posts = db.get('posts');
 		posts.find({},{},function(err,posts){
@@ -13,6 +10,10 @@ router.get('/',function(req, res, next) {
 				"posts": posts
 			});
 		});
+});
+
+router.get('/myprofile',function(req,res,next){
+		
 });
 
 router.post('/',function(req,res,next){

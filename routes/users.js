@@ -22,10 +22,12 @@ router.get('/login', function(req, res, next) {
   	'title': 'Login'
   });
 });
-var upload = multer({dest:'./uploads'});
+
+var upload = multer({dest:'./public/images/uploads'});
 router.post('/register',upload.single('profileimage'),function(req,res,next){
 	var name = req.body.name;
 	var email = req.body.email;
+//	var body = req.body.body;
 	var username = req.body.username;
 	var password = req.body.password;
 	var password2 = req.body.password2;
@@ -39,12 +41,13 @@ router.post('/register',upload.single('profileimage'),function(req,res,next){
 		var profileImageExt = req.file.extension;
 		var profileImageSize = req.file.size;
 	}else{
-		var profileImageName = 'noimage.png'
+		var profileImageName = 'ab.png'
 	}
 
 	//Form validation
 	req.checkBody('name','Name field is required').notEmpty();
 	req.checkBody('email','Email field is required').notEmpty();
+//	req.checkBody('body','Body is required').notEmpty();
 	req.checkBody('email','Email not valid').isEmail();
 	req.checkBody('username','UserName field is required').notEmpty();
 	req.checkBody('password','Password field is required').notEmpty();
@@ -57,6 +60,7 @@ router.post('/register',upload.single('profileimage'),function(req,res,next){
 			errors:errors,
 			name:name,
 			email:email,
+//			body:body,
 			username:username,
 			password:password,
 			password2:password2
@@ -65,6 +69,7 @@ router.post('/register',upload.single('profileimage'),function(req,res,next){
 		var newUser = new User({
 			name : name,
 			email : email,
+//			body : body,
 			username : username,
 			password : password,
 			profileimage: profileImageName
@@ -116,7 +121,7 @@ passport.use(new LocalStrategy(
 		}
 	));
 
-router.post('/login',passport.authenticate('local',{failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
+router.post('/login',passport.authenticate('local',{successRedirect:'/users/profile',failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
 	console.log('Authentication successfull');
 	req.flash('Success','you are logged in');
 	res.redirect('/');
@@ -126,6 +131,10 @@ router.get('/logout',function(req,res){
 	req.logout();
 	req.flash('success','you have logged out');
 	res.redirect('/users/login');
+});
+
+router.get('/profile', function(req, res){
+  res.render('profile', { username: req.user.username });
 });
 
 module.exports = router;
