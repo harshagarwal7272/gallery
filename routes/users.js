@@ -3,6 +3,8 @@ var router = express.Router();
 var multer = require('multer');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var mongo = require('mongodb');
+var db = require('monk')('localhost/nodeblog');
 
 var User = require('../models/user');
 
@@ -53,8 +55,34 @@ router.post('/register',upload.single('profileimage'),function(req,res,next){
 	req.checkBody('password','Password field is required').notEmpty();
 	req.checkBody('password2','Passwords do not match').equals(req.body.password);	
 
+//	var db = req.db;
+	
+
+//	console.log("inside",errors2);
+//	console.log("outside",errors2);
+
 	//check for errors
 	var errors = req.validationErrors();
+/*
+	var errors2="no";
+	var flag=0;
+	var posts = db.get('users');
+	posts.find({username: username},{},function(err,posts){
+		if(err) throw err;
+		if(posts)
+		{
+			res.render('register',{
+				errors:"UserName already taken",
+				name:name,
+				email:email,
+	//			body:body,
+				username:username,
+				password:password,
+				password2:password2
+			});
+		}
+	});
+*/
 	if(errors){
 		res.render('register',{
 			errors:errors,
@@ -121,8 +149,12 @@ passport.use(new LocalStrategy(
 		}
 	));
 
-router.post('/login',passport.authenticate('local',{successRedirect:'/users/profile',failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
+
+
+router.post('/login',passport.authenticate('local',{failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
 	console.log('Authentication successfull');
+	global.username = req.body.username;
+	console.log(username);
 	req.flash('Success','you are logged in');
 	res.redirect('/');
 });

@@ -15,7 +15,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var moment = require('moment');
-//var db2 = require('monk')('localhost/newgallery');
+var db2 = require('monk')('localhost/newgallery');
 
 
 var index = require('./routes/index');
@@ -65,8 +65,29 @@ app.use(expressValidator({
 			value : value
 		};
 	}
+	/*
+	customValidators: {
+	       alreadyTaken: function(userna) {
+	       var users = db2.get('users');
+	       users.findOne({username:userna},{},function(err,found){
+	       		if(err)
+	       			throw err;
+	       		if(found)
+	       		{
+	       			console.log(userna);
+	       			return true;
+	       		}
+	       		else
+	       		{
+	       			return false;
+	       		}
+	       		console.log('hello',userna);
+	       		return false;
+	       });
+	    }
+	 }
+	 */
 }));
-
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
