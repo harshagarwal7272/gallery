@@ -150,12 +150,12 @@ passport.use(new LocalStrategy(
 	));
 
 
-
 router.post('/login',passport.authenticate('local',{failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
 	console.log('Authentication successfull');
-	global.username = req.body.username;
-	console.log(username);
+//	global.username = req.body.username;
+//	console.log(username);
 	req.flash('Success','you are logged in');
+//	res.send(req.body.username);
 	res.redirect('/');
 });
 
@@ -164,9 +164,9 @@ router.get('/logout',function(req,res){
 	req.flash('success','you have logged out');
 	res.redirect('/users/login');
 });
-
+/*
 router.get('/profile', function(req, res){
   res.render('profile', { username: req.user.username });
 });
-
+*/
 module.exports = router;
