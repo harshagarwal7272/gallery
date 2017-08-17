@@ -12,8 +12,9 @@ router.get('/',function(req, res, next) {
 		});
 });
 
-router.get('/myprofile',function(req,res,next){
-		res.render('profile');
+router.get('/myprofile',isLoggedIn,function(req,res,next){
+		res.render('profile',{
+		});
 });
 /*
 router.get('/data',function(req,res){
@@ -66,6 +67,12 @@ function ensureAuthenticated(req,res,next){
 	{
 		res.redirect('/users/login');
 	}
+}
+
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated())
+		return next();
+	res.redirect('/');
 }
 
 module.exports = router;

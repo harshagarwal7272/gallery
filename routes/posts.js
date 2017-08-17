@@ -8,7 +8,7 @@ var db = require('monk')('localhost/newgallery');
 var upload = multer({dest:'./public/images/uploads'});
 
 
-router.get('/add',function(req,res,next){
+router.get('/add',isLoggedIn,function(req,res,next){
 	res.render('addpost',{
 		"title": "Add Post"
 	});
@@ -60,6 +60,10 @@ router.post('/add',upload.single('mainimage'),function(req,res,next){
 	}
 });
 
-
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated())
+		return next();
+	res.redirect('/');
+}
 
 module.exports = router;
