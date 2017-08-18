@@ -5,6 +5,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var db = require('monk')('localhost/nodeblog');
+var flash = require('connect-flash');
 
 var User = require('../models/user');
 
@@ -26,6 +27,7 @@ router.get('/login', function(req, res, next) {
 });
 
 var upload = multer({dest:'./public/images/uploads'});
+
 router.post('/register',upload.single('profileimage'),function(req,res,next){
 	var name = req.body.name;
 	var email = req.body.email;
@@ -54,68 +56,58 @@ router.post('/register',upload.single('profileimage'),function(req,res,next){
 	req.checkBody('username','UserName field is required').notEmpty();
 	req.checkBody('password','Password field is required').notEmpty();
 	req.checkBody('password2','Passwords do not match').equals(req.body.password);	
+	console.log('well well');
+	User.findOne({'username':username},function(err,user){
+		console.log('hello');
+		if(err)throw err;
+		if(user){
+				console.log('already registered');				
+				res.render('register',{
+					error : {msg:'Username already exists'},
+					name:name,
+					email:email,
+					username:username,
+					password:password,
+					password2:password2
+				});
+		}
+		else{
+			//check for errors
+			var errors = req.validationErrors();
+			if(errors){
+				res.render('register',{
+					errors:errors,
+					name:name,
+					email:email,
+					username:username,
+					password:password,
+					password2:password2
+				});
+			}else{
+				var newUser = new User({
+					name : name,
+					email : email,
+			//			body : body,
+					username : username,
+					password : password,
+					profileimage: profileImageName
+				});
 
-//	var db = req.db;
-	
+				//create user
+				
+				User.createUser(newUser,function(err,user){
+					if(err)throw err;
+					console.log(user);
+				});
+				
 
-//	console.log("inside",errors2);
-//	console.log("outside",errors2);
-
-	//check for errors
-	var errors = req.validationErrors();
-/*
-	var errors2="no";
-	var flag=0;
-	var posts = db.get('users');
-	posts.find({username: username},{},function(err,posts){
-		if(err) throw err;
-		if(posts)
-		{
-			res.render('register',{
-				errors:"UserName already taken",
-				name:name,
-				email:email,
-	//			body:body,
-				username:username,
-				password:password,
-				password2:password2
-			});
+				//success message
+				req.flash('success','you are now registered and may log in');
+				res.location('/');
+				res.redirect('/');
+			}
 		}
 	});
-*/
-	if(errors){
-		res.render('register',{
-			errors:errors,
-			name:name,
-			email:email,
-//			body:body,
-			username:username,
-			password:password,
-			password2:password2
-		});
-	}else{
-		var newUser = new User({
-			name : name,
-			email : email,
-//			body : body,
-			username : username,
-			password : password,
-			profileimage: profileImageName
-		});
-
-		//create user
-		
-		User.createUser(newUser,function(err,user){
-			if(err)throw err;
-			console.log(user);
-		});
-		
-
-		//success message
-		req.flash('success','you are now registered and may log in');
-		res.location('/');
-		res.redirect('/');
-	}
 });
 
 passport.serializeUser(function(user,done){
@@ -128,7 +120,7 @@ passport.deserializeUser(function(id,done){
 	});
 });
 
-passport.use(new LocalStrategy(
+passport.use('local-login',new LocalStrategy(
 		function(username,password,done){
 			User.getUserByUsername(username,function(err,user){
 					if(err)throw err;
@@ -150,7 +142,7 @@ passport.use(new LocalStrategy(
 	));
 
 
-router.post('/login',passport.authenticate('local',{failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
+router.post('/login',passport.authenticate('local-login',{failureRedirect:'/users/login',failureFlash:'Invalid username or password'}),function(req,res){
 	console.log('Authentication successfull');
 //	global.username = req.body.username;
 //	console.log(username);

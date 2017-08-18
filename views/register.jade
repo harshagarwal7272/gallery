@@ -3,6 +3,8 @@ extends layout
 block content
 	h1 Register
 	p Please register using the form below
+	if error
+		li.alert.alert-danger #{error.msg}
 	ul.errors
 		if errors
 			each error,i in errors
