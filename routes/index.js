@@ -16,17 +16,6 @@ router.get('/myprofile',isLoggedIn,function(req,res,next){
 		res.render('profile',{
 		});
 });
-/*
-router.get('/data',function(req,res){
-	var users = db.get('users');
-	users.findOne(function(err,datas){
-		if (err) {
-			res.send(err);
-		}
-			res.send(datas);
-	});
-});
-*/
 
 router.post('/',function(req,res,next){
 	var body = req.body.body;

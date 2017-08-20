@@ -1,8 +1,164 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+	font: 14px  Helvetica, Arial, sans-serif;
+	overflow-x: hidden;
+	width: 100%;
+	z-index: 1000!important;
+}
+.post{
+	margin: 0 auto ;
+	display: block;
+	font-size: 0;
+	width: 261px;
+}
+.post a{
+	margin: 2px;
+	border:4px solid transparent;
+	display: inline-block;
+	border-radius: 20px;
+	opacity: 0.7;
+	transition: all 0.3s ease-in;
+}
+.post a:hover{
+	border-color: black;
+	border-radius: 20px;
+	opacity: 1;
+}
+#upl{
+	border-radius: 20px;
 }
 
-a {
-  color: #00B7FF;
+.jumbotron{
+	font-family: Pacifico;
+	padding: 2vh 2vw;
+	background-image: url("http://images.all-free-download.com/images/graphiclarge/green_leafy_wood_background_hd_picture_170050.jpg")!important;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-bottom: 18px saddlebrown solid;
+	border-bottom-style: double;
 }
+
+.everything{
+	background:url("https://www.clipartsgram.com/image/1178093701-nature-pier-bridge-d-river-water-sunset-night-beautiful-background-wallpaper-widescreen-full-screen-widescreen-hd-wallpapers-background-wallpaper.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+	margin-top: 50px;
+}
+.navbar a{
+	background: linear-gradient(to bottom,
+	                          rgba(255, 225, 0, 0) 0%,
+	                      rgba(255, 225, 0, 0) 50%,
+	                      rgba(255, 225, 0, 1) 50%,
+	                      rgba(255, 225, 0, 1) 100%);
+	background-size: 100% 200%;
+	transition: all 0.5s ease-out;
+	border-bottom: none;
+}
+.nav{
+	z-index: 9999!important;
+	height: 50px;
+	box-shadow:5px yellow;
+}
+.navbar a:hover{
+	background-position: 0% 100%;
+	color: red!important;
+}
+#postid{
+	font-family: Sacramento;
+	font-size: 2vw;
+	font-weight: bolder;
+	text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+	/*z-index: 9999 !important;*/
+	color: green;
+}
+#postid:hover{
+	transition: 1s;
+	color: chartreuse;
+}
+.post p{
+	font-family: Sunshiney;
+	font-weight: bold;
+	font-size: 3vw;
+}
+#navbar ul li{
+  transition: all 1s;
+}
+a {
+  color: magenta;
+  font-family: Leckerli One;
+  font-size: 1.5vw;
+}
+a:hover{
+	transition: all 1s;
+}
+#about{
+	padding: 100px 50px;
+	background: url('https://wallpaperscraft.com/image/pink_solid_color_light_bright_65838_3840x2160.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	text-align: center;	
+}
+#about img{
+	margin:0 auto;
+	display: block;
+}
+.panel{
+	box-shadow: 5px 5px 5px black;
+}
+.panel-heading{
+	font-family: Arizonia;
+	font-size: 4vw;	
+	border-left: 4px solid blue !important;
+	border-right: 4px solid blue !important;
+	border-top: 4px solid blue !important;
+}
+.panel-body{
+	font-family: Vibur;
+	font-size: 3vw;
+	opacity: 0.8;
+	font-weight: bold;
+	color: green;
+	border-left: 4px solid fuchsia !important;
+	border-right: 4px solid fuchsia !important;
+	border-bottom: 4px solid fuchsia !important;
+	text-shadow: 2px 2px chartreuse;
+}
+#login{
+	padding: 15vh 5vw;
+}
+#login h1{
+	font-family: Oleo Script;
+	color: green;
+}
+#login a{
+	color: red;
+	font-size: 30px;
+	font-family: Oleo Script;
+}
+#register{
+	padding: 60px 150px;
+	background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/04/Water-pictures-photos-images-download.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+}
+#register h1{
+	font-family: Great Vibes;
+	font-weight: bold;
+	color: darkorchid;
+}
+.btn{
+	transition: all 0.5s;
+}
+#register a{
+	color: green;
+}
+#register a:hover{
+	color: black;
+	transition: all 1s;
+}
+/*#myModal{
+	background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/04/Water-pictures-photos-images-download.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+}*/
